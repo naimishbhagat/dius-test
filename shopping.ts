@@ -58,13 +58,11 @@ class Checkout {
         }
       } else if (this.skus.indexOf("atv") > -1) {
         const count = this.countSkuOccurance("atv");
-        //check atv count more than 4
+        //check atv count more than 2
         if (count > 2) {
           this.skus.splice(this.skus.indexOf("atv"), 1);
-          this.calculateTotal();
-        } else {
-          this.calculateTotal();
         }
+        this.calculateTotal();
       }
     }
 
