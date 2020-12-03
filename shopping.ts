@@ -22,7 +22,7 @@ class Checkout {
     });
   }
 
-  ipdDicount() {
+  ipdDiscount() {
     this.skus.map((sku: string) => {
       let item = products.find((product) => product.sku === sku);
       if (item) {
@@ -35,7 +35,7 @@ class Checkout {
     });
   }
 
-  countOccurance(sku: string) {
+  countSkuOccurance(sku: string) {
     const count = this.skus.filter(function (value) {
       return value === sku;
     }).length;
@@ -49,15 +49,15 @@ class Checkout {
       this.calculateTotal();
     } else {
       if (this.skus.indexOf("ipd") > -1) {
-        const count = this.countOccurance("ipd");
+        const count = this.countSkuOccurance("ipd");
         //Check ipd count more than 4
         if (count > 4) {
-          this.ipdDicount();
+          this.ipdDiscount();
         } else {
           this.calculateTotal();
         }
       } else if (this.skus.indexOf("atv") > -1) {
-        const count = this.countOccurance("atv");
+        const count = this.countSkuOccurance("atv");
         //check atv count more than 4
         if (count > 2) {
           this.skus.splice(this.skus.indexOf("atv"), 1);
