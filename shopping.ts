@@ -46,26 +46,29 @@ class Checkout {
     // Bundle in a free VGA adapter free of charge with every MacBook Pro sold
     if (this.skus.indexOf("mbp") > -1 && this.skus.indexOf("vga") > -1) {
       this.skus.splice(this.skus.indexOf("vga"), 1);
-      this.calculateTotal();
-    } else {
-      if (this.skus.indexOf("ipd") > -1) {
-        const count = this.countSkuOccurance("ipd");
-        //Check ipd count more than 4
-        if (count > 4) {
-          this.ipdDiscount();
-        } else {
-          this.calculateTotal();
-        }
-      } else if (this.skus.indexOf("atv") > -1) {
-        const count = this.countSkuOccurance("atv");
-        //check atv count more than 2
-        if (count > 2) {
-          this.skus.splice(this.skus.indexOf("atv"), 1);
-        }
-        this.calculateTotal();
+    }
+    // If ipd and atv both in the same checkout
+    if (this.skus.indexOf("ipd") > -1 && this.skus.indexOf("atv") > -1) {
+      const countIpd = this.countSkuOccurance("ipd");
+      const countAtv = this.countSkuOccurance("atv");
+      //Check atv count more than 2
+      if (countAtv > 2) {
+        this.skus.splice(this.skus.indexOf("atv"), 1);
+      }
+      //Check ipd count more than 4
+      if (countIpd > 4) {
+        this.ipdDiscount();
+        return this.orderTotal;
       }
     }
-
+    // If no Ipd in the checkout
+    if (this.skus.indexOf("atv") > -1) {
+      const countAtv = this.countSkuOccurance("atv");
+      if (countAtv > 2) {
+        this.skus.splice(this.skus.indexOf("atv"), 1);
+      }
+    }
+    this.calculateTotal();
     return this.orderTotal;
   }
 }
